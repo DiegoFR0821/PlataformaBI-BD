@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Capa 7: Dashboard Empresarial - NightWatch</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .layout-dashboard-moderno { display: flex; gap: 20px; margin-top: 15px; min-height: calc(100vh - 120px); }
+        .sidebar-filtros-powerbi { width: 300px; background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 8px; padding: 25px 20px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .contenedor-reportes-mando { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        .dashboard-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .chart-box-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; height: 250px; }
+        .chart-box-card h4 { font-size: 11px; margin-bottom: 8px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 5px; font-family: monospace; }
+        .filter-group { display: flex; flex-direction: column; gap: 6px; }
+        .filter-group label { font-size: 11px; color: var(--text-secondary); font-family: monospace; font-weight: bold; }
+        .filter-control { background: var(--bg-main); color: white; border: 1px solid var(--border-color); padding: 10px; border-radius: 5px; font-family: monospace; font-size: 12px; outline: none; }
+        .filter-control:focus { border-color: var(--cyan); }
+        .seccion-titulo-bi { color: var(--cyan); font-size: 12px; font-weight: bold; letter-spacing: 1px; border-left: 3px solid var(--cyan); padding-left: 8px; margin-top: 5px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-shield-halved" style="color: var(--cyan); font-size: 24px;"></i>
+                <div><h3>NightWatch</h3><span class="font-mono" style="font-size: 10px; color: var(--text-secondary);">BI PLAN V1.0</span></div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="capa1.html" class="nav-link"><i class="fa-solid fa-database"></i> Capa 1: Fuentes</a></li>
+                    <li><a href="capa2.html" class="nav-link"><i class="fa-solid fa-table-list"></i> Capa 2: Staging</a></li>
+                    <li><a href="capa3.html" class="nav-link"><i class="fa-solid fa-gears"></i> Capa 3: ETL</a></li>
+                    <li><a href="capa4.html" class="nav-link"><i class="fa-solid fa-cube"></i> Capa 4: DW</a></li>
+                    <li><a href="capa5.html" class="nav-link"><i class="fa-solid fa-brain"></i> Capa 5: IA Predictiva</a></li>
+                    <li><a href="capa6.html" class="nav-link"><i class="fa-solid fa-book"></i> Capa 6: Semántica</a></li>
+                    <li><a href="capa7.html" class="nav-link active"><i class="fa-solid fa-chart-simple"></i> Capa 7: Dashboard</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="menu-toggle" id="toggle-sidebar" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px;"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Capa 7: Dashboard Corporativo de Seguridad</h2>
+                </div>
+                <button class="btn btn-refresh" onclick="window.print()"><i class="fa-solid fa-download"></i> Descargar Dashboard</button>
+            </header>
+
+            <div class="content-area" style="max-width: 1600px;">
+                
+                <div class="layout-dashboard-moderno">
+                    
+                    <aside class="sidebar-filtros-powerbi">
+                        <div style="font-size: 13px; color: white; font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-family: monospace;"><i class="fa-solid fa-filter text-cyan"></i> FILTROS DE PANEL</div>
+                        
+                        <div class="filter-group">
+                            <label>Fecha del Reporte</label>
+                            <input type="date" id="filtro-fecha" class="filter-control" value="2026-05-24">
+                        </div>
+                        <div class="filter-group">
+                            <label>Jurisdicción Territorial</label>
+                            <select id="filtro-distrito" class="filter-control">
+                                <option value="TODOS">-- Todos los Distritos --</option>
+                                <option value="Los Olivos">Los Olivos</option>
+                                <option value="Comas">Comas</option>
+                                <option value="San Martin de Porres">San Martín de Porres</option>
+                                <option value="Independencia">Independencia</option>
+                                <option value="Carabayllo">Carabayllo</option>
+                                <option value="Puente Piedra">Puente Piedra</option>
+                                <option value="Ancon">Ancón</option>
+                                <option value="Santa Rosa">Santa Rosa</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Tipología Penal (Delito)</label>
+                            <select id="filtro-delito" class="filter-control">
+                                <option value="TODOS">-- Todos los Delitos --</option>
+                                <option value="Robo a mano armada">Robo a mano armada</option>
+                                <option value="Hurto simple">Hurto simple</option>
+                                <option value="Extorsion">Extorsión</option>
+                                <option value="Robo de vehiculo">Robo de vehículo</option>
+                                <option value="Vandalismo">Vandalismo</option>
+                                <option value="Arrebato">Arrebato</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Bloque Horario Crítico</label>
+                            <select id="filtro-horario" class="filter-control">
+                                <option value="TODOS">-- Todos los Horarios --</option>
+                                <option value="Madrugada">Madrugada (00:00 - 06:00)</option>
+                                <option value="Manana">Mañana (06:00 - 12:00)</option>
+                                <option value="Tarde">Tarde (12:00 - 18:00)</option>
+                                <option value="Noche">Noche (18:00 - 00:00)</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Nivel Riesgo Operativo</label>
+                            <select id="filtro-severidad" class="filter-control">
+                                <option value="TODOS">-- Todas las Alertas --</option>
+                                <option value="Alta">Alta Severidad</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
+                            </select>
+                        </div>
+                    </aside>
+
+                    <div class="contenedor-reportes-mando">
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 25px; margin-bottom: 25px;">
+                            
+                            <div style="background: var(--bg-panel); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; border-top: 4px solid var(--cyan); box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                                <p style="font-size: 11px; color: var(--text-secondary); font-family: monospace; letter-spacing: 0.5px;">INCIDENTES</p>
+                                <h2 id="kpi-total" style="color: white; margin-top: 10px; font-size: 26px;">0</h2>
+                            </div>
+                            
+                            <div style="background: var(--bg-panel); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; border-top: 4px solid #a78bfa; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                                <p style="font-size: 11px; color: var(--text-secondary); font-family: monospace; letter-spacing: 0.5px;">TIEMPO RESPUESTA</p>
+                                <h2 id="kpi-tiempo" style="color: white; margin-top: 10px; font-size: 26px;">0 min</h2>
+                            </div>
+                            
+                            <div style="background: var(--bg-panel); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; border-top: 4px solid #f87171; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                                <p style="font-size: 11px; color: var(--text-secondary); font-family: monospace; letter-spacing: 0.5px;">TASA EXTORSIÓN</p>
+                                <h2 id="kpi-extorsion" style="color: white; margin-top: 10px; font-size: 26px;">0%</h2>
+                            </div>
+                            
+                            <div style="background: var(--bg-panel); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; border-top: 4px solid #10b981; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                                <p style="font-size: 11px; color: var(--text-secondary); font-family: monospace; letter-spacing: 0.5px;">TASA CAPTURA</p>
+                                <h2 id="kpi-captura" style="color: white; margin-top: 10px; font-size: 26px;">0%</h2>
+                            </div>
+                            
+                            <div style="background: var(--bg-panel); border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; border-top: 4px solid #f59e0b; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                                <p style="font-size: 11px; color: var(--text-secondary); font-family: monospace; letter-spacing: 0.5px;">USO DE ARMAS</p>
+                                <h2 id="kpi-armas" style="color: white; margin-top: 10px; font-size: 26px;">0%</h2>
+                            </div>
+
+                        </div>
+
+                        <div class="seccion-titulo-bi"><i class="fa-solid fa-chart-columns"></i> SECCIÓN I: ANALÍTICA DESCRIPTIVA (HISTÓRICO)</div>
+                        <div class="dashboard-grid-3">
+                            <div class="chart-box-card">
+                                <h4>Mapeo de Incidencias por Distrito</h4>
+                                <canvas id="gEstadistico1"></canvas>
+                            </div>
+                            <div class="chart-box-card">
+                                <h4>Segmentación por Naturaleza del Delito</h4>
+                                <canvas id="gEstadistico2"></canvas>
+                            </div>
+                            <div class="chart-box-card">
+                                <h4>Volumen según Bloque Horario</h4>
+                                <canvas id="gEstadistico3"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="seccion-titulo-bi"><i class="fa-solid fa-brain"></i> SECCIÓN II: COMPONENTE PREDICTIVO (INFERENCIA IA)</div>
+                        <div class="dashboard-grid-3">
+                            <div class="chart-box-card">
+                                <h4>Probabilidad de Riesgo Territorial (Radar)</h4>
+                                <canvas id="gPredictivo1"></canvas>
+                            </div>
+                            <div class="chart-box-card">
+                                <h4>Tendencia de Frecuencia Proyectada</h4>
+                                <canvas id="gPredictivo2"></canvas>
+                            </div>
+                            <div class="chart-box-card">
+                                <h4>Inferencia de Gravedad del Delito</h4>
+                                <canvas id="gPredictivo3"></canvas>
+                            </div>
+                        </div>
+
+                        <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px;">
+                            <h4 style="font-size: 11px; color: #9ca3af; font-family: monospace; text-transform: uppercase;"><i class="fa-solid fa-table text-cyan"></i> Matriz Operativa Detallada (Filtro Cruzado Power BI)</h4>
+                            <table class="data-table" style="margin-top: 10px; font-size: 11px;">
+                                <thead>
+                                    <tr><th>Jurisdicción Específica</th><th>Categoría del Delito</th><th>Despliegue de Seguridad</th><th>Estado Crítico</th></tr>
+                                </thead>
+                                <tbody id="tabla-dashboard-dinamica" class="font-mono">
+                                    </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
