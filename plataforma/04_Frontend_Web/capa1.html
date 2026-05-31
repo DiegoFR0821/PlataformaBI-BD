@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Capa 1: Fuentes de Datos - NightWatch</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-shield-halved" style="color: var(--cyan); font-size: 24px;"></i>
+                <div>
+                    <h3 style="font-size: 16px;">Plataforma BI</h3>
+                    <span class="font-mono" style="font-size: 10px; color: var(--text-secondary);">SYS_OP V1.0</span>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="capa1.html" class="nav-link active"><i class="fa-solid fa-database"></i> Capa 1: Fuentes</a></li>
+                    <li><a href="capa2.html" class="nav-link"><i class="fa-solid fa-table-list"></i> Capa 2: Staging</a></li>
+                    <li><a href="capa3.html" class="nav-link"><i class="fa-solid fa-gears"></i> Capa 3: ETL</a></li>
+                    <li><a href="capa4.html" class="nav-link"><i class="fa-solid fa-database"></i> Capa 4: Data Warehouse</a></li>
+                    <li><a href="capa5.html" class="nav-link"><i class="fa-solid fa-table-list"></i> Capa 5: IA Predictiva</a></li>
+                    <li><a href="capa6.html" class="nav-link"><i class="fa-solid fa-gears"></i> Capa 6: Catalogo</a></li>
+                    <li><a href="capa7.html" class="nav-link"><i class="fa-solid fa-chart-simple"></i> Capa 7: Power BI</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div style="display: flex; align-items: center;">
+                    <button class="menu-toggle" id="toggle-sidebar"><i class="fa-solid fa-bars"></i></button>
+                    <h2>Plataforma BI Integrada - Inseguridad Ciudadana  <span style="color: var(--text-secondary); font-weight: 300;">| Lima Norte</span></h2>
+                </div>
+                <div style="color: var(--text-secondary);"><i class="fa-solid fa-user"></i> Analista Jefe</div>
+            </header>
+
+            <div class="content-area">
+                <h1 style="color: var(--cyan); margin-bottom: 5px;">Capa 1: Fuentes de Datos</h1>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;" class="font-mono">Ingesta de reportes policiales (Los Olivos, Comas, SMP, Independencia).</p>
+
+                <label for="file-upload" class="upload-zone" style="display: block;">
+                    <i class="fa-solid fa-cloud-arrow-up fa-3x" style="color: var(--cyan); margin-bottom: 15px;"></i>
+                    <h3 style="margin-bottom: 10px;">Selecciona o Arrastra Archivos CSV</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;" class="font-mono">Subir reportes_policiales.csv (Max 500MB)</p>
+                </label>
+
+                <input type="file" id="file-upload" class="file-input" accept=".csv, .xlsx">
+
+                <div id="preview-container" style="display: none; margin-top: 30px; background: var(--bg-panel); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <h3 style="color: var(--cyan); margin-bottom: 15px;"><i class="fa-solid fa-eye"></i> Vista Previa del Archivo Cargado</h3>
+                    <div style="overflow-x: auto;">
+                        <table class="data-table" id="preview-table">
+                            </table>
+                    </div>
+                </div>
+                <input type="file" id="file-upload" class="file-input" accept=".csv, .xlsx">
+
+                <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: var(--bg-panel); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <h4><i class="fa-solid fa-users" style="color: var(--cyan);"></i> Alertas Ciudadanas (RRSS)</h4>
+                        <p style="color: var(--text-secondary); font-size: 13px; margin-top: 10px;">Conexión API en tiempo real.</p>
+                    </div>
+                </div>
+                <div class="action-bar">
+                    <button class="btn btn-refresh" onclick="location.reload()"><i class="fa-solid fa-arrows-rotate"></i> Refrescar</button>
+                    <button class="btn btn-cancel"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+                    <a href="capa2.html" style="text-decoration: none;">
+                        <button class="btn btn-accept"><i class="fa-solid fa-check"></i> Aceptar y Continuar</button>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>
